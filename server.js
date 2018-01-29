@@ -4,19 +4,34 @@ const app = new Koa();
 const {Client} = require('pg');
 const squel = require('squel').useFlavour('postgres');
 
-const client = new Client({
-  user: 'garuna',
-  host: 'pgsql02.dinaserver.com',
-  database: 'consulta',
-  password: 'F1s10G4run4',
-  port: 5432,
-});
-
-client.connect();
 
 app.use(async ctx => {
-  let res = await client.query(squel.select().from("consulta.demo").toString());
+  console.log(ctx);
+  console.log("Serving request");
+  const res = await ctx.db.query(squel.select().from("consulta.demo").toString());
+  console.log("Fetch database rows");
   ctx.body = res.rows;
+  console.log("Write response body");
 });
 
-app.listen(13218);
+const run = async () => {
+  const db = new Client({
+    user: 'garuna',
+    host: 'pgsql02.dinaserver.com',
+    database: 'consulta',
+    password: 'F1s10G4run4',
+    port: 5432,
+  });
+  await db.connect();
+  console.log("Connected to the database");
+
+  app.context.squel = squel;
+  app.context.db = db;
+
+  app.listen(13218);
+};
+
+run().catch(e => console.error(e));
+
+
+
