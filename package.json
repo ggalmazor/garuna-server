@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/ggalmazor/garuna-server#readme",
   "dependencies": {
-    "koa": "^2.4.1"
+    "koa": "^2.4.1",
+    "pg": "^7.4.1",
+    "squel": "^5.12.0"
   }
 }
