@@ -2,6 +2,7 @@ const Koa = require('koa');
 const app = new Koa();
 
 const {Client} = require('pg');
+const squel = require('squel').useFlavour('postgres');
 
 const client = new Client({
   user: 'garuna',
@@ -14,7 +15,7 @@ const client = new Client({
 client.connect();
 
 app.use(async ctx => {
-  let res = await client.query("SELECT * FROM consulta.demo");
+  let res = await client.query(squel.select().from("consulta.demo").toString());
   ctx.body = res.rows;
 });
 
