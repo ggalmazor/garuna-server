@@ -1,0 +1,18 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": "garuna",
+    "password": "garuna",
+    "host": "localhost",
+    "database": "consulta",
+    "schema": "consulta"
+  },
+  "prod": {
+    "driver": "pg",
+    "user": "garuna",
+    "password": "F1s10G4run4",
+    "host": "pgsql02.dinaserver.com",
+    "database": "consulta",
+    "schema": "consulta"
+  }
+}

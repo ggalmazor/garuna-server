@@ -21,5 +21,9 @@
     "koa-router": "^7.3.0",
     "pg": "^7.4.1",
     "squel": "^5.12.0"
+  },
+  "devDependencies": {
+    "db-migrate": "^0.10.2",
+    "db-migrate-pg": "^0.3.0"
   }
 }
