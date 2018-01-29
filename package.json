@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ggalmazor/garuna-server/issues"
   },
-  "homepage": "https://github.com/ggalmazor/garuna-server#readme"
+  "homepage": "https://github.com/ggalmazor/garuna-server#readme",
+  "dependencies": {
+    "koa": "^2.4.1"
+  }
 }
