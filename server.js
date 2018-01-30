@@ -1,7 +1,6 @@
 const fs = require('fs');
 const https = require('https');
 const {Client} = require('pg');
-const squel = require('squel').useFlavour('postgres');
 const Koa = require('koa');
 const Router = require('koa-router');
 const koaBody = require('koa-body');
@@ -23,13 +22,11 @@ router.get('/secure-hello/:name', ctx => {
 router.post('/login', koaBody(), async ctx => {
   const username = ctx.request.body.username;
   const password = ctx.request.body.password;
-  const {rows} = await ctx.db.query(squel.select()
-      .from('consulta.therapist')
-      .field('id')
-      .field('email')
-      .where('username = $1')
-      .where('password = crypt($2, password)')
-      .toString(), [username, password]);
+  const {rows} = await ctx.db.query(`
+    SELECT id, email
+    FROM consulta.therapist
+    WHERE username = $1 AND password = crypt($2, password)
+  `, [username, password]);
 
   const therapist = {id: rows[0].id, username, email: rows[0].email};
   const token = jwt.sign(therapist, jwtSecret, {expiresIn: 30 * 24 * 60 * 60});
@@ -50,13 +47,10 @@ router.post('/create-therapist', koaBody(), async ctx => {
   const username = ctx.request.body.username;
   const password = ctx.request.body.password;
   const email = ctx.request.body.email;
-  await ctx.db.query(squel.insert()
-      .into("consulta.therapist")
-      .set("id", squel.select().function('nextval(?)', 'consulta.therapist_id_seq'))
-      .set("username", username)
-      .set("password", squel.select().function('crypt(?, ?)', password, squel.select().function('gen_salt(?)', 'bf')))
-      .set("email", email)
-      .toString());
+  await ctx.db.query(`
+    INSERT INTO consulta.therapist(id, username, password, email) 
+    VALUES (nextval('consulta.therapist_id_seq'), $1, crypt($2, gen_salt('bf')), $3)
+  `, [username, password, email]);
   ctx.response.status = 204;
 });
 
@@ -70,7 +64,6 @@ const run = async () => {
   await db.connect();
   console.log("Connected to the database");
 
-  app.context.squel = squel;
   app.context.db = db;
 
   https.createServer({

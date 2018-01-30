@@ -22,8 +22,7 @@
     "koa-body": "^2.5.0",
     "koa-router": "^7.3.0",
     "luxon": "^0.4.0",
-    "pg": "^7.4.1",
-    "squel": "^5.12.0"
+    "pg": "^7.4.1"
   },
   "devDependencies": {
     "db-migrate": "^0.10.2",
