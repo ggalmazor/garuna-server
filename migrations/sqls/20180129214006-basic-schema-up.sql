@@ -1,9 +1,8 @@
 CREATE TABLE therapist (
-  id            INT  NOT NULL,
-  username      TEXT NOT NULL,
-  password_salt TEXT NOT NULL,
-  password_hash TEXT NOT NULL,
-  email         TEXT NOT NULL,
+  id       INT  NOT NULL,
+  username TEXT NOT NULL,
+  password TEXT NOT NULL,
+  email    TEXT NOT NULL,
   CONSTRAINT therapist_pk PRIMARY KEY (id),
   CONSTRAINT therapist_username_uq UNIQUE (username),
   CONSTRAINT therapist_email_uq UNIQUE (email)
