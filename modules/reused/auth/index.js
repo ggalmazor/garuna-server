@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
 
+// Easily changeable to a key pair backed jwt by transforming
+// this module into a function that gets the key. Example:
+// var cert = fs.readFileSync('private.key');  // get private key
+// var token = jwt.sign({ foo: 'bar' }, cert, { algorithm: 'RS256'});
+
 const jwtSecret = 'supersecretodelamuerte';
 
 const verifyToken = async (ctx, next) => {
