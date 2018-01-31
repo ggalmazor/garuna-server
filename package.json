@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.1.1",
     "koa": "^2.4.1",
     "koa-body": "^2.5.0",
+    "koa-compose": "^4.0.0",
     "koa-router": "^7.3.0",
     "luxon": "^0.4.0",
     "pg": "^7.4.1"
