@@ -67,7 +67,7 @@ class None extends Option {
   }
 
   orThrow(message) {
-    throw Error(message);
+    throw new Error(message);
   }
 }
 

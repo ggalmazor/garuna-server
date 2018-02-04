@@ -38,7 +38,9 @@ class Failure extends Try {
   orThrow(error) {
     if (typeof error === 'function')
       throw error(this.error);
-    throw Error(error);
+    if (error)
+      error.message = `${error} - Caused by ${this.error.message}`;
+    throw this.error;
   }
 }
 

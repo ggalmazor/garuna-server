@@ -7,8 +7,7 @@ const buildMiddleware = query => {
     middlewares.push(auth.verifyToken);
   middlewares.push(async ctx => {
     try {
-      const params = Object.assign({}, ctx.params, ctx.request.query);
-      ctx.response.body = await query.handler(ctx, params);
+      ctx.response.body = await query.handler(ctx, ctx.request.query);
     } catch (e) {
       if (e.httpCode) {
         ctx.response.body = e.message;
