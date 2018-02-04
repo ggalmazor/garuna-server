@@ -17,6 +17,7 @@ class Success extends Try {
   }
 
   toOption() {
+    // Caution! If this.value is null, Try.toOption() will return a None! This will infuriate functional gods!
     return Option.of(this.value);
   }
 
