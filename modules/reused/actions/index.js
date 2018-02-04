@@ -7,8 +7,18 @@ const buildMiddleware = action => {
   if (action.secure)
     middlewares.push(auth.verifyToken);
   middlewares.push(async ctx => {
-    await action.handler(ctx, ctx.request.body);
-    ctx.response.status = 204;
+    try {
+      await action.handler(ctx, ctx.request.body);
+      ctx.response.status = 204;
+    } catch (e) {
+      if (e.httpCode) {
+        ctx.response.body = e.message;
+        ctx.response.status = e.httpCode;
+        console.error(e);
+      } else {
+        throw e;
+      }
+    }
   });
   return koaCompose(middlewares);
 };

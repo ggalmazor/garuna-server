@@ -18,7 +18,7 @@ CREATE TABLE patient (
   sex           TEXT,
   phone_numbers TEXT [],
   emails        TEXT [],
-  birthdate     DATE,
+  birth_date    DATE,
   fiscal_id     TEXT,
   address       TEXT,
   location      TEXT,

@@ -6,8 +6,18 @@ const buildMiddleware = query => {
   if (query.secure)
     middlewares.push(auth.verifyToken);
   middlewares.push(async ctx => {
-    const params = Object.assign({}, ctx.params, ctx.request.query);
-    ctx.response.body = await query.handler(ctx, params);
+    try {
+      const params = Object.assign({}, ctx.params, ctx.request.query);
+      ctx.response.body = await query.handler(ctx, params);
+    } catch (e) {
+      if (e.httpCode) {
+        ctx.response.body = e.message;
+        ctx.response.status = e.httpCode;
+        console.error(e);
+      } else {
+        throw e;
+      }
+    }
   });
   return koaCompose(middlewares);
 };

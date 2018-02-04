@@ -14,6 +14,7 @@ const actions = require('./modules/reused/actions')(router);
 const queries = require('./modules/reused/queries')(router);
 
 require('./modules/therapist')(actions, queries);
+require('./modules/patient')(actions, queries);
 
 const run = async app => {
   const db = new Client(database);
